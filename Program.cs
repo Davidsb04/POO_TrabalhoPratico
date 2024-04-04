@@ -23,7 +23,7 @@
 
             
 
-            Cerimonia c1 = new Cerimonia(qntConvidados, data, );
+            Cerimonia c1 = new Cerimonia(qntConvidados,  );
         }
     }
 }
