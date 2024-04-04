@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace POO_TrabalhoPratico
 {
-    internal class Cerimonia
+    public class Cerimonia
     {
         private DateTime Data {  get; set; }
         private int NumConvidados { get; set; }
-        private Espaco espaco {  get; set; }
+        private Espaco Espaco {  get; set; }
 
-        public Cerimonia(DateTime data, int NumConvidados, Espaco espaco)
+        public Cerimonia(DateTime data, int numConvidados, Espaco espaco)
         {
-
+            Data = data;
+            Espaco = espaco;
+            NumConvidados = numConvidados;
         }
     }
 }
