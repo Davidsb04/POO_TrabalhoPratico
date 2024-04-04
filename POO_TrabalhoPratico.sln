@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POO_TrabalhoPratico", "POO_TrabalhoPratico.csproj", "{0BA7E366-FEF8-4BEE-BE10-D807E961D84C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrabalhoPratico.Testes", "..\TrabalhoPratico.Testes\TrabalhoPratico.Testes.csproj", "{2D2C790F-651E-4099-82DC-EF13F7F033AC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0BA7E366-FEF8-4BEE-BE10-D807E961D84C} = {0BA7E366-FEF8-4BEE-BE10-D807E961D84C}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

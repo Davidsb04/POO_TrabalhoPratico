@@ -8,7 +8,17 @@ namespace POO_TrabalhoPratico
 {
     internal class NoivaCia
     {
-        Espaco espacos;
+        private List<Espaco> espacos;   
+        private Cerimonia cerimonia;
 
+        public NoivaCia(List<Espaco> espacos, Cerimonia cerimonia)
+        {
+
+        }
+
+        public void AgendarCerimonia(int numeroConvidados)
+        {
+
+        }
     }
 }
