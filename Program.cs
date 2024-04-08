@@ -4,26 +4,37 @@
     {
         static void Main(string[] args)
         {
-            Espaco e1 = new Espaco("A", 100);
-            Espaco e2 = new Espaco("B", 100);
-            Espaco e3 = new Espaco("C", 100);
-            Espaco e4 = new Espaco("D", 100);
-            Espaco e5 = new Espaco("E", 200);
-            Espaco e6 = new Espaco("F", 200);
-            Espaco e7 = new Espaco("G", 50);
-            Espaco e8 = new Espaco("H", 500);
+            NoivaCia noivaCia = new NoivaCia();
+            int opcao = 0;
+
+            do
+            {
+                Console.Write("\n[1] Agendar cerimonia \n[2] Sair \n\nEscolha uma opção: ");
+                opcao = int.Parse(Console.ReadLine());
+
+                if (opcao == 1)
+                {
+                    Console.Write("\nDigite o número de convidados: ");
+                    int numConvidados = int.Parse(Console.ReadLine());
 
 
 
-            Console.Write("Digite a quantidade de convidados: ");
-            int qntConvidados = int.Parse(Console.ReadLine());
+                    (DateTime dataCerimonia, Espaco melhorEspaco) = noivaCia.AgendarCerimonia(numConvidados);
 
-            Console.Write("Digite a data da cerimonia: ");
-            DateTime data = DateTime.Today;
-
-            
-
-            Cerimonia c1 = new Cerimonia(qntConvidados,  );
+                    if (melhorEspaco.Identificador != "Z")
+                    {
+                        Console.WriteLine($"\nA data da cerimônia será: {dataCerimonia.ToShortDateString()}, no espaço: {melhorEspaco.Identificador}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nNão temos espaços que comportam essa quantidade de convidados.");
+                    }
+                }
+                else if (opcao != 2)
+                {
+                    Console.WriteLine("\nDigite uma opção válida.");
+                }
+            } while (opcao != 2);
         }
     }
 }
