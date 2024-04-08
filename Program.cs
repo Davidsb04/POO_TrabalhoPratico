@@ -17,6 +17,14 @@
                     Console.Write("\nDigite o número de convidados: ");
                     int numConvidados = int.Parse(Console.ReadLine());
 
+                    while (numConvidados > 500)
+                    {
+                        Console.WriteLine("\nNúmero de convidados excede a capacidade máxima dos espaços disponíveis.");
+
+                        Console.Write("\nDigite o número de convidados: ");
+                        numConvidados = int.Parse(Console.ReadLine());
+                    }
+
 
 
                     (DateTime dataCerimonia, Espaco melhorEspaco) = noivaCia.AgendarCerimonia(numConvidados);
