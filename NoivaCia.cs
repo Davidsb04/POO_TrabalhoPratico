@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("TrabalhoPratico.Testes")]
 
 namespace POO_TrabalhoPratico
 {
@@ -38,7 +41,7 @@ namespace POO_TrabalhoPratico
             return (dataCerimonia, melhorEspaco);
         }
 
-        private DateTime CalcularProximaData(int numConvidados)
+        internal DateTime CalcularProximaData(int numConvidados)
         {
             DateTime data = DateTime.Today.AddDays(30);
 
@@ -63,12 +66,12 @@ namespace POO_TrabalhoPratico
             }
         }
 
-        private bool VerificarCerimonaNaData(Espaco espacoEspecifico, DateTime data)
+        internal bool VerificarCerimonaNaData(Espaco espacoEspecifico, DateTime data)
         {
             return !Cerimonias.Any(c => c.Data.Date == data.Date && c.Espaco == espacoEspecifico);
         }
 
-        private Espaco SelecionarMelhorEspaco(int numConvidados, DateTime data)
+        internal Espaco SelecionarMelhorEspaco(int numConvidados, DateTime data)
         {
             var espacosOrdenados = Espacos.OrderBy(espaco => espaco.Capacidade);
 
