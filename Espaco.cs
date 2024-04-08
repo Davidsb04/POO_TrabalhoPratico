@@ -8,8 +8,8 @@ namespace POO_TrabalhoPratico
 {
     public class Espaco
     {
-        private string Identificador {  get; set; }
-        private int Capacidade { get; set; }
+        public string Identificador {  get; private set; }
+        public int Capacidade { get; private set; }
 
         public Espaco(string identificador, int capacidade) 
         {

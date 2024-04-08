@@ -8,15 +8,13 @@ namespace POO_TrabalhoPratico
 {
     public class Cerimonia
     {
-        private DateTime Data {  get; set; }
-        private int NumConvidados { get; set; }
-        private Espaco Espaco {  get; set; }
+        public DateTime Data {  get; private set; }
+        public Espaco Espaco {  get; private set; }
 
-        public Cerimonia(DateTime data, int numConvidados, Espaco espaco)
+        public Cerimonia(DateTime data, Espaco espaco)
         {
             Data = data;
             Espaco = espaco;
-            NumConvidados = numConvidados;
         }
     }
 }
