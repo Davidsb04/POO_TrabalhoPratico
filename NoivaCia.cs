@@ -30,7 +30,7 @@ namespace POO_TrabalhoPratico
         public (DateTime Data, Espaco Espaco) AgendarCerimonia(int numConvidados)
         {
             DateTime dataCerimonia = CalcularProximaData(numConvidados);
-            Espaco melhorEspaco = SelecionarMelhorEspaco(numConvidados);
+            Espaco melhorEspaco = SelecionarMelhorEspaco(numConvidados, dataCerimonia);
 
             Cerimonia novaCerimonia = new Cerimonia(dataCerimonia, melhorEspaco);
             Cerimonias.Add(novaCerimonia);
@@ -38,7 +38,7 @@ namespace POO_TrabalhoPratico
             return (dataCerimonia, melhorEspaco);
         }
 
-        public DateTime CalcularProximaData(int numConvidados)
+        private DateTime CalcularProximaData(int numConvidados)
         {
             DateTime data = DateTime.Today.AddDays(30);
 
@@ -46,7 +46,13 @@ namespace POO_TrabalhoPratico
             {
                 if (data.DayOfWeek == DayOfWeek.Friday || data.DayOfWeek == DayOfWeek.Saturday)
                 {
-                    Espaco espacoEspecifico = SelecionarMelhorEspaco(numConvidados);
+                    Espaco espacoEspecifico = SelecionarMelhorEspaco(numConvidados, data);
+
+                    if (espacoEspecifico.Identificador == "Z")
+                    {
+                        data = data.AddDays(1);
+                        continue;
+                    }
 
                     if (VerificarCerimonaNaData(espacoEspecifico, data))
                     {
@@ -57,22 +63,32 @@ namespace POO_TrabalhoPratico
             }
         }
 
-        public bool VerificarCerimonaNaData(Espaco espacoEspecifico, DateTime data)
+        private bool VerificarCerimonaNaData(Espaco espacoEspecifico, DateTime data)
         {
             return !Cerimonias.Any(c => c.Data.Date == data.Date && c.Espaco == espacoEspecifico);
         }
 
-        public Espaco SelecionarMelhorEspaco(int numConvidados)
+        private Espaco SelecionarMelhorEspaco(int numConvidados, DateTime data)
         {
+            var espacosOrdenados = Espacos.OrderBy(espaco => espaco.Capacidade);
+
             foreach (Espaco espaco in Espacos)
             {
                 int diferenca = espaco.Capacidade - numConvidados;
 
                 if (diferenca >= 0 && diferenca < 50)
                 {
+                    bool espacoOcupado = Cerimonias.Any(c => c.Espaco == espaco && c.Data.Date == data.Date);
+
+                    if (espacoOcupado)
+                    {
+                        continue;
+                    }
+
                     return espaco;
                 }
             }
+
             return new Espaco("Z", -1);
         }
     }
