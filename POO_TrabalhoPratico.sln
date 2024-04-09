@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrabalhoPratico.Tests", "..
 		{0BA7E366-FEF8-4BEE-BE10-D807E961D84C} = {0BA7E366-FEF8-4BEE-BE10-D807E961D84C}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aplicação", "Aplicação", "{A8254393-B84E-415E-98CE-E12D4B8065CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes", "Testes", "{D86E3EB1-C151-49CF-95B5-527C7EA08E79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0BA7E366-FEF8-4BEE-BE10-D807E961D84C} = {A8254393-B84E-415E-98CE-E12D4B8065CA}
+		{DBFD522D-CA26-4B2D-AADD-87DAAB36BCE9} = {D86E3EB1-C151-49CF-95B5-527C7EA08E79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6ECC4CE0-A1A5-46B3-9EDB-32244CAEAF17}
