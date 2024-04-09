@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("TrabalhoPratico.Testes")]
+[assembly: InternalsVisibleTo("TrabalhoPratico.Tests")]
 
 namespace POO_TrabalhoPratico
 {
     public class NoivaCia
     {
         private List<Espaco> Espacos;
-        private List<Cerimonia> Cerimonias;
+        internal List<Cerimonia> Cerimonias;
 
         public NoivaCia()
         {

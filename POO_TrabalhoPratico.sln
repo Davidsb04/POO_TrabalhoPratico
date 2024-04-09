@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POO_TrabalhoPratico", "POO_TrabalhoPratico.csproj", "{0BA7E366-FEF8-4BEE-BE10-D807E961D84C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrabalhoPratico.Testes", "..\TrabalhoPratico.Testes\TrabalhoPratico.Testes.csproj", "{2D2C790F-651E-4099-82DC-EF13F7F033AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrabalhoPratico.Tests", "..\TrabalhoPratico.Tests\TrabalhoPratico.Tests.csproj", "{DBFD522D-CA26-4B2D-AADD-87DAAB36BCE9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0BA7E366-FEF8-4BEE-BE10-D807E961D84C} = {0BA7E366-FEF8-4BEE-BE10-D807E961D84C}
 	EndProjectSection
@@ -20,10 +20,10 @@ Global
 		{0BA7E366-FEF8-4BEE-BE10-D807E961D84C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BA7E366-FEF8-4BEE-BE10-D807E961D84C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BA7E366-FEF8-4BEE-BE10-D807E961D84C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D2C790F-651E-4099-82DC-EF13F7F033AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D2C790F-651E-4099-82DC-EF13F7F033AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D2C790F-651E-4099-82DC-EF13F7F033AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D2C790F-651E-4099-82DC-EF13F7F033AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBFD522D-CA26-4B2D-AADD-87DAAB36BCE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBFD522D-CA26-4B2D-AADD-87DAAB36BCE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBFD522D-CA26-4B2D-AADD-87DAAB36BCE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBFD522D-CA26-4B2D-AADD-87DAAB36BCE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
