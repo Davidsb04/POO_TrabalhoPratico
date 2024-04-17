@@ -17,6 +17,6 @@ namespace POO_TrabalhoPratico
             Identificador = identificador;
             Capacidade = capacidade;
             Preco = preco;
-        }
+        }        
     }
 }
