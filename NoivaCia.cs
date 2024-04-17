@@ -19,14 +19,14 @@ namespace POO_TrabalhoPratico
             Cerimonias = new List<Cerimonia>();
             Espacos = new List<Espaco>
             {
-                new Espaco("A", 100),
-                new Espaco("B", 100),
-                new Espaco("C", 100),
-                new Espaco("D", 100),
-                new Espaco("E", 200),
-                new Espaco("F", 200),
-                new Espaco("G", 50),
-                new Espaco("H", 500),
+                new Espaco("A", 100, 10000),
+                new Espaco("B", 100, 10000),
+                new Espaco("C", 100, 10000),
+                new Espaco("D", 100, 10000),
+                new Espaco("E", 200, 17000),
+                new Espaco("F", 200, 17000),
+                new Espaco("G", 50, 8000),
+                new Espaco("H", 500, 35000),
             };
         }
 
@@ -37,6 +37,7 @@ namespace POO_TrabalhoPratico
 
             Cerimonia novaCerimonia = new Cerimonia(dataCerimonia, melhorEspaco);
             Cerimonias.Add(novaCerimonia);
+
 
             return (dataCerimonia, melhorEspaco);
         }
@@ -92,7 +93,7 @@ namespace POO_TrabalhoPratico
                 }
             }
 
-            return new Espaco("Z", -1);
+            return new Espaco("Z", -1, 0);
         }
     }
 }

@@ -31,7 +31,7 @@
 
                     if (melhorEspaco.Identificador != "Z")
                     {
-                        Console.WriteLine($"\nA data da cerimônia será: {dataCerimonia.ToShortDateString()}, no espaço: {melhorEspaco.Identificador}");
+                        Console.WriteLine($"\nA data da cerimônia será: {dataCerimonia.ToShortDateString()}, no espaço: {melhorEspaco.Identificador} no valor de R${melhorEspaco.Preco}");
                     }
                     else
                     {

@@ -10,12 +10,13 @@ namespace POO_TrabalhoPratico
     {
         public string Identificador {  get; private set; }
         public int Capacidade { get; private set; }
+        public double Preco { get; private set; }
 
-        public Espaco(string identificador, int capacidade) 
+        public Espaco(string identificador, int capacidade, double preco) 
         {
             Identificador = identificador;
             Capacidade = capacidade;
+            Preco = preco;
         }
-
     }
 }
