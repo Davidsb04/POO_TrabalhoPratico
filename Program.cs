@@ -25,9 +25,25 @@
                         numConvidados = int.Parse(Console.ReadLine());
                     }
 
+                    Console.Write("\n[1]Premier \n[2]Luxo \n[3]Standard \n\nEscolha uma opção: ");
+                    int tipoCasamento = int.Parse(Console.ReadLine());
 
+                    while (tipoCasamento < 1 || tipoCasamento > 3)
+                    {
+                        Console.WriteLine("\nOpção inválida.");
 
-                    (DateTime dataCerimonia, Espaco melhorEspaco) = noivaCia.AgendarCerimonia(numConvidados);
+                        Console.Write("\n[1]Premier \n[2]Luxo \n[3]Standard \n\nEscolha uma opção: ");
+                        tipoCasamento = int.Parse(Console.ReadLine());
+                    }
+
+                    TipoCasamento tipo;
+
+                    if (tipoCasamento == 1) { tipo = TipoCasamento.Premier; }
+                    else if (tipoCasamento == 2) { tipo = TipoCasamento.Luxo; }
+                    else { tipo = TipoCasamento.Standard; }
+                    
+                    (DateTime dataCerimonia, Espaco melhorEspaco) = noivaCia.AgendarCerimonia(numConvidados, tipo);
+
 
                     if (melhorEspaco.Identificador != "Z")
                     {

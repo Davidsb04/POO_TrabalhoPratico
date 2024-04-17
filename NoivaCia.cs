@@ -30,14 +30,16 @@ namespace POO_TrabalhoPratico
             };
         }
 
-        public (DateTime Data, Espaco Espaco) AgendarCerimonia(int numConvidados)
+        public (DateTime Data, Espaco Espaco) AgendarCerimonia(int numConvidados, TipoCasamento tipo)
         {
             DateTime dataCerimonia = CalcularProximaData(numConvidados);
             Espaco melhorEspaco = SelecionarMelhorEspaco(numConvidados, dataCerimonia);
 
+
             Cerimonia novaCerimonia = new Cerimonia(dataCerimonia, melhorEspaco);
             Cerimonias.Add(novaCerimonia);
 
+            CalcularValorCerimonia(tipo, melhorEspaco, numConvidados, novaCerimonia);
 
             return (dataCerimonia, melhorEspaco);
         }
@@ -94,6 +96,30 @@ namespace POO_TrabalhoPratico
             }
 
             return new Espaco("Z", -1, 0);
+        }
+        internal void CalcularValorCerimonia(TipoCasamento tipo, Espaco espaco, int numConvidados, Cerimonia cerimonia)
+        {
+            double valorTipo, valorComida, valorBebida;
+
+            if (tipo == TipoCasamento.Premier)
+            {
+                valorTipo = (100 * espaco.Capacidade) + (100 * espaco.Capacidade) + (20 * espaco.Capacidade) + (30 * espaco.Capacidade);
+                valorComida = 60 * numConvidados;
+            }
+            else if(tipo == TipoCasamento.Luxo)
+            {
+                valorTipo = (75 * espaco.Capacidade) + (75 * espaco.Capacidade) + (15 * espaco.Capacidade) + (25 * espaco.Capacidade);
+                valorComida = 48 * numConvidados;
+            }
+            else
+            {
+                valorTipo = (50 * espaco.Capacidade) + (50 * espaco.Capacidade) + (10 * espaco.Capacidade) + (20 * espaco.Capacidade);
+                valorComida = 40 * numConvidados;
+            }
+
+            double valorTotal = valorTipo + valorComida;
+
+            cerimonia.AlterarPrecoTotal(valorTotal);            
         }
     }
 }
