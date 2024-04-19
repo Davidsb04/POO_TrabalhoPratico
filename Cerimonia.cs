@@ -6,23 +6,27 @@ using System.Threading.Tasks;
 
 namespace POO_TrabalhoPratico
 {
-    public class Cerimonia
+    public class Cerimonia : Festa
     {
+        private readonly DateTime Data;
+        private readonly Espaco Espaco;
 
-
-        public DateTime Data {  get; private set; }
-        public Espaco Espaco {  get; private set; }
-        public double Preco {  get; private set; }
-
-        public Cerimonia(DateTime data, Espaco espaco)
+        public Cerimonia(DateTime data, Espaco espaco) : base(0)
         {
             Data = data;
             Espaco = espaco;
         }
-
-        public void AlterarPrecoTotal(double valorTotal)
+        public DateTime GetData()
+        { 
+            return Data;
+        }
+        public Espaco GetEspaco()
         {
-            Preco += valorTotal;
+            return Espaco;
+        }
+        public void AlterarPrecoCerimonia(double valorTotal)
+        {
+            SetPreco(valorTotal);
         }
     }
 }
