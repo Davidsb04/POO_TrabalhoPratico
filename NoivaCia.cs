@@ -48,8 +48,6 @@ namespace POO_TrabalhoPratico
         //Retorna uma data válida para a cerimonia
         internal DateTime CalcularProximaData(int numConvidados, DateTime dataAtual)
         {
-            Cerimonia? ultimaCerimonia = Cerimonias.LastOrDefault();
-
             DateTime data = dataAtual.AddDays(30);            
 
             while (true)
