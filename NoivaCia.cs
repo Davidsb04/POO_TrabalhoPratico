@@ -29,10 +29,10 @@ namespace POO_TrabalhoPratico
                 new Espaco("H", 500, 35000),
             };
         }
-
-        public (DateTime Data, Espaco Espaco, Cerimonia novaCerimonia) AgendarCerimonia(int numConvidados, TipoCasamento tipo)
-        {
-            DateTime dataAtual = DateTime.Today;
+        //Agenda a cerimonia, salvando as informações da festa
+        internal (DateTime Data, Espaco Espaco, Cerimonia novaCerimonia) AgendarCerimonia(int numConvidados, TipoCasamento tipo)
+        {           
+            DateTime dataAtual = DateTime.Today;            
 
             DateTime dataCerimonia = CalcularProximaData(numConvidados, dataAtual);
             Espaco melhorEspaco = SelecionarMelhorEspaco(numConvidados, dataCerimonia);
@@ -45,10 +45,12 @@ namespace POO_TrabalhoPratico
 
             return (dataCerimonia, melhorEspaco, novaCerimonia);
         }
-
+        //Retorna uma data válida para a cerimonia
         internal DateTime CalcularProximaData(int numConvidados, DateTime dataAtual)
         {
-            DateTime data = dataAtual.AddDays(30);
+            Cerimonia? ultimaCerimonia = Cerimonias.LastOrDefault();
+
+            DateTime data = dataAtual.AddDays(30);            
 
             while (true)
             {
@@ -64,44 +66,80 @@ namespace POO_TrabalhoPratico
 
                     if (VerificarCerimonaNaData(espacoEspecifico, data))
                     {
-                        return data;
+                        data = data.AddDays(1);
+                        continue;
                     }
+
+                    return data;
                 }
                 data = data.AddDays(1);
             }
         }
 
+        //Verifica sem tem alguma cerimonia no dia e espaço específico
         internal bool VerificarCerimonaNaData(Espaco espacoEspecifico, DateTime data)
         {
-            return !Cerimonias.Any(c => c.GetData().Date == data.Date && c.GetEspaco() == espacoEspecifico);
+            return Cerimonias.Any(c => c.GetData().Date == data.Date && c.GetEspaco().GetIdentificador() == espacoEspecifico.GetIdentificador());
         }
-
+        //Seleciona o melhor espaço possível com base no número de convidados
         internal Espaco SelecionarMelhorEspaco(int numConvidados, DateTime data)
         {
-            var espacosOrdenados = Espacos.OrderBy(espaco => espaco.GetCapacidade());
-
             foreach (Espaco espaco in Espacos)
             {
                 int diferenca = espaco.GetCapacidade() - numConvidados;
 
-                if (diferenca >= 0 && diferenca < 50)
+                if (numConvidados <= 50)
                 {
-                    bool espacoOcupado = Cerimonias.Any(c => c.GetEspaco() == espaco && c.GetData().Date == data.Date);
-
-                    if (espacoOcupado)
+                    if (espaco.GetIdentificador() == "G")
                     {
-                        continue;
+                        return espaco;
                     }
-
-                    return espaco;
+                    continue;
                 }
+                else if (numConvidados <= 100)
+                {
+                    if(diferenca < 50)
+                    {
+                        bool espacoOcupado = Cerimonias.Any(c => c.GetEspaco() == espaco && c.GetData().Date == data.Date);
+
+                        if (espacoOcupado)
+                        {
+                            continue;
+                        }
+
+                        return espaco;
+                    }                    
+                }
+                else if(numConvidados <= 200)
+                {
+                    if (diferenca >= 0 && diferenca < 100)
+                    {
+                        bool espacoOcupado = Cerimonias.Any(c => c.GetEspaco() == espaco && c.GetData().Date == data.Date);
+
+                        if (espacoOcupado)
+                        {
+                            continue;
+                        }
+
+                        return espaco;
+                    }                    
+                }
+                else
+                {
+                    if (espaco.GetIdentificador() == "H")
+                    {
+                        return espaco;
+                    }
+                    continue;
+                }
+                
             }
 
             return new Espaco("Z", -1, 0);
         }
+        // Faz o calculo referente ao tipo de festa e comidas consumidas
         internal void CalcularValorCerimonia(TipoCasamento tipoCasamento, int numConvidados, Cerimonia cerimonia)
-        {           
-
+        {          
             double valorTipo, valorComida;
 
             if (tipoCasamento == TipoCasamento.Premier)
@@ -124,8 +162,8 @@ namespace POO_TrabalhoPratico
 
             cerimonia.AlterarPrecoCerimonia(valorTotal);            
         }
-
-        internal void CalcularValorBebida(TipoBebida tipoBebida, int qntBebida)
+        //Faz o calculo referente as bebidas selecionadas
+        internal double CalcularValorBebida(TipoBebida tipoBebida, int qntBebida)
         {
             Cerimonia? ultimaCerimonia = Cerimonias.LastOrDefault();
             Dictionary<TipoBebida, double> valoresUnitarios = new Dictionary<TipoBebida, double>
@@ -142,8 +180,10 @@ namespace POO_TrabalhoPratico
             double valorTotal = qntBebida * valoresUnitarios[tipoBebida];
 
             ultimaCerimonia?.AlterarPrecoCerimonia(valorTotal);
-        }
 
+            return valorTotal;
+        }
+        //Retorna as informações para os noivos
         public override string ToString()
         {
             Cerimonia? ultimaCerimonia = Cerimonias.LastOrDefault();
