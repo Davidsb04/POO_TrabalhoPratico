@@ -17,5 +17,5 @@ Este é um sistema desenvolvido em C# para ajudar empresas de eventos de casamen
 
 1. Clone este repositório em sua máquina local.
 2. Certifique-se de ter o ambiente de desenvolvimento .NET configurado.
-3. Configure a conexão com o banco de dados no arquivo de configuração.
+3. Configure a conexão com o banco de dados no arquivo `appSettings.json` e insira ele no diretório bin/Debug/net8.0.
 4. Execute o projeto em seu ambiente de desenvolvimento.
