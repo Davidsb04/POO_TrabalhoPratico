@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POO_TrabalhoPratico
+namespace POO_TrabalhoPratico.Enums
 {
     internal enum TipoBebida
     {

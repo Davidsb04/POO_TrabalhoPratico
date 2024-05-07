@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POO_TrabalhoPratico.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,9 +25,12 @@ namespace POO_TrabalhoPratico
         {
             return Espaco;
         }
-        public void AlterarPrecoCerimonia(double valorTotal)
+        public virtual void AlterarPrecoCerimonia(List<Cerimonia> cerimonias, int numConvidados, Espaco espaco)
         {
-            SetPreco(valorTotal);
+        }
+
+        internal virtual void CalcularValorBebida(List<Cerimonia> cerimonias)
+        {
         }
     }
 }
