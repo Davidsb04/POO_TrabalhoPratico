@@ -25,10 +25,11 @@ namespace POO_TrabalhoPratico
         {
             return Espaco;
         }
+        // Realiza o calculo do valor da cerimonia, baseado no tipo de casamento selecionado
         public virtual void AlterarPrecoCerimonia(List<Cerimonia> cerimonias, int numConvidados, Espaco espaco)
         {
         }
-
+        // Realiza o calculo do valor da bebida que sera consumida na cerimonia, baseado no tipo de casamento selecionado
         internal virtual void CalcularValorBebida(List<Cerimonia> cerimonias)
         {
         }
