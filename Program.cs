@@ -1,4 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
+using POO_TrabalhoPratico.Enums;
+using POO_TrabalhoPratico.TiposCerimonia;
 
 namespace POO_TrabalhoPratico
 {
@@ -6,7 +8,6 @@ namespace POO_TrabalhoPratico
     {
         static MySqlConnection Conexao;
         static NoivaCia noivaCia = new NoivaCia();
-        static List<Cerimonia> cerimoniasBanco = new List<Cerimonia>();
         static void Main(string[] args)
         {
             ConfiguracaoConexao();            
@@ -32,47 +33,35 @@ namespace POO_TrabalhoPratico
                     }
 
                     Console.Write("\n[1]Premier \n[2]Luxo \n[3]Standard \n\nEscolha uma opção: ");
-                    int opcaoCasamento = int.Parse(Console.ReadLine());
+                    TipoCasamento opcaoCasamento = (TipoCasamento)int.Parse(Console.ReadLine());
 
-                    while (opcaoCasamento < 1 || opcaoCasamento > 3)
+                    while ((int)opcaoCasamento < 1 || (int)opcaoCasamento > 3)
                     {
                         Console.WriteLine("\nOpção inválida.");
 
                         Console.Write("\n[1]Premier \n[2]Luxo \n[3]Standard \n\nEscolha uma opção: ");
-                        opcaoCasamento = int.Parse(Console.ReadLine());
+                        opcaoCasamento = (TipoCasamento)int.Parse(Console.ReadLine());
                     }
 
-                    TipoCasamento tipoCasamento;
+                    Cerimonia novaCerimonia;
 
-                    if (opcaoCasamento == 1) { tipoCasamento = TipoCasamento.Premier; }
-                    else if (opcaoCasamento == 2) { tipoCasamento = TipoCasamento.Luxo; }
-                    else { tipoCasamento = TipoCasamento.Standard; }
-
-
-                    (DateTime dataCerimonia, Espaco melhorEspaco, Cerimonia novaCerimonia) = noivaCia.AgendarCerimonia(numConvidados, tipoCasamento);
-
-                    foreach (TipoBebida tipoBebida in Enum.GetValues(typeof(TipoBebida)))
+                    if (opcaoCasamento == TipoCasamento.Premier) 
                     {
-                        if (tipoBebida != TipoBebida.EspumanteImportado && tipoBebida != TipoBebida.CervejaArtesanal)
-                        {
-                            Console.Write($"\nInforme a quantidade de {tipoBebida}: ");
-                            int qntBebida = int.Parse(Console.ReadLine());
-                            noivaCia.CalcularValorBebida(tipoBebida, qntBebida);
-                        }
-                        else
-                        {
-                            if (tipoCasamento == TipoCasamento.Luxo || tipoCasamento == TipoCasamento.Premier)
-                            {
-                                Console.Write($"\nInforme a quantidade de {tipoBebida}: ");
-                                int qntBebida = int.Parse(Console.ReadLine());
-                                noivaCia.CalcularValorBebida(tipoBebida, qntBebida);
-                            }
-                            else
-                            {
-                                Console.WriteLine($"\n{tipoBebida} é somente para casamentos Luxo e Premier.");
-                            }
-                        }
+                        novaCerimonia = new TipoPremier(DateTime.Today, new Espaco("Z", 100, 1000));
                     }
+                    else if (opcaoCasamento == TipoCasamento.Luxo) 
+                    {
+                        novaCerimonia = new TipoLuxo(DateTime.Today, new Espaco("Z", 100, 1000));
+                    }
+                    else 
+                    {
+                        novaCerimonia = new TipoStandard(DateTime.Today, new Espaco("Z", 100, 1000));
+                    }                  
+
+                    Espaco melhorEspaco = noivaCia.AgendarCerimonia(numConvidados, novaCerimonia);
+
+                    novaCerimonia.AlterarPrecoCerimonia(noivaCia.Cerimonias, numConvidados, melhorEspaco);
+                    novaCerimonia.CalcularValorBebida(noivaCia.Cerimonias);
 
                     if (melhorEspaco.GetIdentificador() != "Z")
                     {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using POO_TrabalhoPratico.Enums;
 
 [assembly: InternalsVisibleTo("TrabalhoPratico.Tests")]
 
@@ -12,7 +13,7 @@ namespace POO_TrabalhoPratico
     public class NoivaCia
     {
         private List<Espaco> Espacos;
-        internal List<Cerimonia> Cerimonias;
+        public List<Cerimonia> Cerimonias;
 
         public NoivaCia()
         {
@@ -29,8 +30,12 @@ namespace POO_TrabalhoPratico
                 new Espaco("H", 500, 35000),
             };
         }
+        public List<Cerimonia> GetCerimonias()
+        {
+            return Cerimonias;
+        }
         //Agenda a cerimonia, salvando as informações da festa
-        internal (DateTime Data, Espaco Espaco, Cerimonia novaCerimonia) AgendarCerimonia(int numConvidados, TipoCasamento tipo)
+        internal Espaco AgendarCerimonia(int numConvidados, Cerimonia novaCerimonia)
         {           
             DateTime dataAtual = DateTime.Today;            
 
@@ -38,12 +43,10 @@ namespace POO_TrabalhoPratico
             Espaco melhorEspaco = SelecionarMelhorEspaco(numConvidados, dataCerimonia);
 
 
-            Cerimonia novaCerimonia = new Cerimonia(dataCerimonia, melhorEspaco);
+            novaCerimonia = new Cerimonia(dataCerimonia, melhorEspaco);
             Cerimonias.Add(novaCerimonia);
 
-            CalcularValorCerimonia(tipo, numConvidados, novaCerimonia);
-
-            return (dataCerimonia, melhorEspaco, novaCerimonia);
+            return melhorEspaco;
         }
         //Retorna uma data válida para a cerimonia
         internal DateTime CalcularProximaData(int numConvidados, DateTime dataAtual)
@@ -134,52 +137,6 @@ namespace POO_TrabalhoPratico
             }
 
             return new Espaco("Z", -1, 0);
-        }
-        // Faz o calculo referente ao tipo de festa e comidas consumidas
-        internal void CalcularValorCerimonia(TipoCasamento tipoCasamento, int numConvidados, Cerimonia cerimonia)
-        {          
-            double valorTipo, valorComida;
-
-            if (tipoCasamento == TipoCasamento.Premier)
-            {
-                valorTipo = (100 * cerimonia.GetEspaco().GetCapacidade()) + (100 * cerimonia.GetEspaco().GetCapacidade()) + (20 * cerimonia.GetEspaco().GetCapacidade()) + (30 * cerimonia.GetEspaco().GetCapacidade());
-                valorComida = 60 * numConvidados;
-            }
-            else if(tipoCasamento == TipoCasamento.Luxo)
-            {
-                valorTipo = (75 *       cerimonia.GetEspaco().GetCapacidade()) + (75 * cerimonia.GetEspaco().GetCapacidade()) + (15 * cerimonia.GetEspaco().GetCapacidade()) + (25 * cerimonia.GetEspaco().GetCapacidade());
-                valorComida = 48 * numConvidados;
-            }
-            else
-            {
-                valorTipo = (50 * cerimonia.GetEspaco().GetCapacidade()) + (50 * cerimonia.GetEspaco().GetCapacidade()) + (10 * cerimonia.GetEspaco().GetCapacidade()) + (20 * cerimonia.GetEspaco().GetCapacidade());
-                valorComida = 40 * numConvidados;
-            }
-
-            double valorTotal = valorTipo + valorComida;
-
-            cerimonia.AlterarPrecoCerimonia(valorTotal);            
-        }
-        //Faz o calculo referente as bebidas selecionadas
-        internal double CalcularValorBebida(TipoBebida tipoBebida, int qntBebida)
-        {
-            Cerimonia? ultimaCerimonia = Cerimonias.LastOrDefault();
-            Dictionary<TipoBebida, double> valoresUnitarios = new Dictionary<TipoBebida, double>
-            {
-                { TipoBebida.Agua, 5.00 },
-                { TipoBebida.Suco, 7.00 },
-                { TipoBebida.Refrigerante, 8.00 },
-                { TipoBebida.CervejaComum, 20.00 },
-                { TipoBebida.CervejaArtesanal, 30.00 },
-                { TipoBebida.EspumanteNacional, 80.00 },
-                { TipoBebida.EspumanteImportado, 140.00 }
-            };
-
-            double valorTotal = qntBebida * valoresUnitarios[tipoBebida];
-
-            ultimaCerimonia?.AlterarPrecoCerimonia(valorTotal);
-
-            return valorTotal;
         }
         //Retorna as informações para os noivos
         public override string ToString()
