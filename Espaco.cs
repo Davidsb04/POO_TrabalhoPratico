@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace POO_TrabalhoPratico
 {
-    public class Espaco : Festa
+    public class Espaco
     {
+        public double Preco;
         private readonly string Identificador;
         private readonly int Capacidade;
 
-        public Espaco(string identificador, int capacidade, double preco) : base(preco)
+        public Espaco(string identificador, int capacidade, double preco)
         {
+            Preco = preco;
             Identificador = identificador;
             Capacidade = capacidade;
         }  
@@ -23,6 +25,10 @@ namespace POO_TrabalhoPratico
         public int GetCapacidade()
         {
             return Capacidade;
+        }
+        public double GetPreco()
+        {
+            return Preco;
         }
     }
 }

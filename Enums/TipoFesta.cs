@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace POO_TrabalhoPratico.Enums
 {
-    public enum TipoCasamento
+    public enum TipoFesta
     {
-        Premier = 1,
-        Luxo,
-        Standard
+        Casamento = 1,
+        Formatura,
+        FestaEmpresa,
+        FestaAniversario,
+        Livre
     }
 }

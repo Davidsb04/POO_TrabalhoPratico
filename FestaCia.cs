@@ -10,14 +10,14 @@ using POO_TrabalhoPratico.Enums;
 
 namespace POO_TrabalhoPratico
 {
-    public class NoivaCia
+    public class FestaCia
     {
         private List<Espaco> Espacos;
-        public List<Cerimonia> Cerimonias;
+        public static List<Festa> Festas;
 
-        public NoivaCia()
+        public FestaCia()
         {
-            Cerimonias = new List<Cerimonia>();
+            Festas = new List<Festa>();
             Espacos = new List<Espaco>
             {
                 new Espaco("A", 100, 10000),
@@ -30,21 +30,16 @@ namespace POO_TrabalhoPratico
                 new Espaco("H", 500, 35000),
             };
         }
-        public List<Cerimonia> GetCerimonias()
-        {
-            return Cerimonias;
-        }
         //Agenda a cerimonia, salvando as informações da festa
-        internal Espaco AgendarCerimonia(int numConvidados, Cerimonia novaCerimonia)
+        internal Espaco AgendarFesta(int numConvidados, Festa novaFesta, TipoFesta tipoFesta, double valorBebidas, NivelFesta nivelFesta)
         {           
             DateTime dataAtual = DateTime.Today;            
 
             DateTime dataCerimonia = CalcularProximaData(numConvidados, dataAtual);
             Espaco melhorEspaco = SelecionarMelhorEspaco(numConvidados, dataCerimonia);
 
-
-            novaCerimonia = new Cerimonia(dataCerimonia, melhorEspaco);
-            Cerimonias.Add(novaCerimonia);
+            novaFesta = new Festa(valorBebidas, dataCerimonia, melhorEspaco, tipoFesta, nivelFesta);
+            Festas.Add(novaFesta);
 
             return melhorEspaco;
         }
@@ -65,7 +60,7 @@ namespace POO_TrabalhoPratico
                         continue;
                     }
 
-                    if (VerificarCerimonaNaData(espacoEspecifico, data))
+                    if (VerificarFestaNaData(espacoEspecifico, data))
                     {
                         data = data.AddDays(1);
                         continue;
@@ -78,9 +73,9 @@ namespace POO_TrabalhoPratico
         }
 
         //Verifica sem tem alguma cerimonia no dia e espaço específico
-        internal bool VerificarCerimonaNaData(Espaco espacoEspecifico, DateTime data)
+        internal bool VerificarFestaNaData(Espaco espacoEspecifico, DateTime data)
         {
-            return Cerimonias.Any(c => c.GetData().Date == data.Date && c.GetEspaco().GetIdentificador() == espacoEspecifico.GetIdentificador());
+            return Festas.Any(c => c.GetData().Date == data.Date && c.GetEspaco().GetIdentificador() == espacoEspecifico.GetIdentificador());
         }
         //Seleciona o melhor espaço possível com base no número de convidados
         internal Espaco SelecionarMelhorEspaco(int numConvidados, DateTime data)
@@ -101,7 +96,7 @@ namespace POO_TrabalhoPratico
                 {
                     if(diferenca < 50)
                     {
-                        bool espacoOcupado = Cerimonias.Any(c => c.GetEspaco() == espaco && c.GetData().Date == data.Date);
+                        bool espacoOcupado = Festas.Any(c => c.GetEspaco() == espaco && c.GetData().Date == data.Date);
 
                         if (espacoOcupado)
                         {
@@ -115,7 +110,7 @@ namespace POO_TrabalhoPratico
                 {
                     if (diferenca >= 0 && diferenca < 100)
                     {
-                        bool espacoOcupado = Cerimonias.Any(c => c.GetEspaco() == espaco && c.GetData().Date == data.Date);
+                        bool espacoOcupado = Festas.Any(c => c.GetEspaco() == espaco && c.GetData().Date == data.Date);
 
                         if (espacoOcupado)
                         {
@@ -138,19 +133,43 @@ namespace POO_TrabalhoPratico
 
             return new Espaco("Z", -1, 0);
         }
+
+        //Retorna todas as festas agendadas
+        public string ExibirTodasFestas()
+        {
+            if (Festas.Count == 0)
+                return "\nNão foi possível encontrar nenhuma festa.";
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (var festa in Festas)
+            {
+                stringBuilder.AppendLine($"\nTipo da festa: {festa.GetTipoFesta()}")
+                       .AppendLine($"Data da Festa: {festa.GetData().ToShortDateString()}")
+                       .AppendLine($"Nível da Festa: {festa.GetNivelFesta()}")
+                       .AppendLine($"Espaço da Festa: {festa.GetEspaco().GetIdentificador()}")
+                       .AppendLine($"Valor Total: R${festa.GetPreco() + festa.GetEspaco().GetPreco()}");
+            }
+
+            return stringBuilder.ToString();
+
+        }
+
         //Retorna as informações para os noivos
         public override string ToString()
         {
-            Cerimonia? ultimaCerimonia = Cerimonias.LastOrDefault();
+            Festa? ultimaFesta = Festas.LastOrDefault();
 
-            if (ultimaCerimonia != null)
+            if (ultimaFesta != null)
             {
                 return
-                    $"\nData da Cerimonia: {ultimaCerimonia.GetData().ToShortDateString()}\n" +
-                    $"Espaço da Cerimonia: {ultimaCerimonia.GetEspaco().GetIdentificador()}\n" +
-                    $"Valor Espaço: R${ultimaCerimonia.GetEspaco().GetPreco()}\n" +
-                    $"Valor Festa: R${ultimaCerimonia.GetPreco()}\n" +
-                    $"Valor Total: R${ultimaCerimonia.GetPreco() + ultimaCerimonia.GetEspaco().GetPreco()}";
+                    $"\nTipo da festa: {ultimaFesta.GetTipoFesta()}\n" +
+                    $"Data da Festa: {ultimaFesta.GetData().ToShortDateString()}\n" +
+                    $"Espaço da Festa: {ultimaFesta.GetEspaco().GetIdentificador()}\n" +
+                    $"Nível da Festa: {ultimaFesta.GetNivelFesta()}\n" +
+                    $"Valor Espaço: R${ultimaFesta.GetEspaco().GetPreco()}\n" +
+                    $"Valor Festa: R${ultimaFesta.GetPreco()}\n" +
+                    $"Valor Total: R${ultimaFesta.GetPreco() + ultimaFesta.GetEspaco().GetPreco()}";
 
             }
             else
