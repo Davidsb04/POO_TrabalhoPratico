@@ -135,7 +135,7 @@ namespace POO_TrabalhoPratico
         }
 
         //Retorna todas as festas agendadas
-        public string ExibirTodasFestas()
+        public string CalendarioDeFestas()
         {
             if (Festas.Count == 0)
                 return "\nNão foi possível encontrar nenhuma festa.";
@@ -145,10 +145,7 @@ namespace POO_TrabalhoPratico
             foreach (var festa in Festas)
             {
                 stringBuilder.AppendLine($"\nTipo da festa: {festa.GetTipoFesta()}")
-                       .AppendLine($"Data da Festa: {festa.GetData().ToShortDateString()}")
-                       .AppendLine($"Nível da Festa: {festa.GetNivelFesta()}")
-                       .AppendLine($"Espaço da Festa: {festa.GetEspaco().GetIdentificador()}")
-                       .AppendLine($"Valor Total: R${festa.GetPreco() + festa.GetEspaco().GetPreco()}");
+                       .AppendLine($"Data da Festa: {festa.GetData().ToShortDateString()}");
             }
 
             return stringBuilder.ToString();

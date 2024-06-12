@@ -19,8 +19,16 @@ namespace POO_TrabalhoPratico
 
             do
             {
-                Console.Write("\n[1] Agendar cerimonia \n[2] Exibir Festas \n[3] Sair\n\nEscolha uma opção: ");
-                opcao = int.Parse(Console.ReadLine());  
+                Console.Write("\n[1] Agendar cerimonia \n[2] Calendário de Festas \n[3] Sair\n\nEscolha uma opção: ");
+                opcao = int.Parse(Console.ReadLine());
+
+                while (opcao < 1 || opcao > 3)
+                {
+                    Console.WriteLine("\nOpção inválida.");
+
+                    Console.Write("\n[1] Agendar cerimonia \n[2] Calendário de festas \n[3] Sair\n\nEscolha uma opção: ");
+                    opcao = int.Parse(Console.ReadLine());
+                }
 
                 if (opcao == 1)
                 {
@@ -104,7 +112,7 @@ namespace POO_TrabalhoPratico
                 }
                 else if (opcao == 2)
                 {
-                    Console.WriteLine(festaCia.ExibirTodasFestas());
+                    Console.WriteLine(festaCia.CalendarioDeFestas());
                 }
                 else if (opcao != 3)
                 {
