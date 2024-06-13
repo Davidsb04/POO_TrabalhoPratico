@@ -8,13 +8,13 @@ namespace POO_TrabalhoPratico.Helpers
 {
     public class Bebidas
     {
-        public int QntAgua { get; set; } = 0;
-        public int QntSuco { get; set; } = 0;
-        public int QntRefri { get; set; } = 0;
-        public int QntCervejaComum { get; set; } = 0;
-        public int QntCervejaArtesanal { get; set; } = 0;
-        public int QntEspumanteNacional { get; set; } = 0;
-        public int QntEspumanteImportado { get; set; } = 0;
+        public uint QntAgua { get; set; } = 0;
+        public uint QntSuco { get; set; } = 0;
+        public uint QntRefri { get; set; } = 0;
+        public uint QntCervejaComum { get; set; } = 0;
+        public uint QntCervejaArtesanal { get; set; } = 0;
+        public uint QntEspumanteNacional { get; set; } = 0;
+        public uint QntEspumanteImportado { get; set; } = 0;
 
         public static List<Bebidas> Qntbebidas = new List<Bebidas>();
 
