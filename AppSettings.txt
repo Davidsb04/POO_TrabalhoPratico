@@ -1,1 +1,1 @@
-﻿Insira sua conexão com o banco de dados aqui.
+﻿Server=seu sever;Username=seu usuario;password=sua senha;database=seu banco de dados
