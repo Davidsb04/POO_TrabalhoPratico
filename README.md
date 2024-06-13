@@ -1,6 +1,6 @@
-# Sistema de Gerenciamento de Eventos para Casamento
+# Sistema de Gerenciamento de Eventos
 
-Este é um sistema desenvolvido em C# para ajudar empresas de eventos de casamento a gerenciar e agendar cerimônias com base no número de convidados e na disponibilidade de espaços.
+Este é um sistema desenvolvido em C# para ajudar empresas de eventos a gerenciar e agendar diversos tipos de festas e cerimônias, incluindo Casamentos, Formaturas, Festas de Empresa, Festas de Aniversário e eventos Livres.
 
 ## Funcionalidades
 
