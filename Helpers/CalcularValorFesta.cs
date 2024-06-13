@@ -96,7 +96,7 @@ namespace POO_TrabalhoPratico.Helpers
             return valorTipo + valorComida;
         }
 
-        public double CalcularValorBebida(int qntAgua, int qntSuco, int qntRefri, int qntCervejaComum, int qntCervejaArtesanal, int qntEspumanteNacional, int qntEspumanteImportado)
+        public double CalcularValorBebida(uint qntAgua, uint qntSuco, uint qntRefri, uint qntCervejaComum, uint qntCervejaArtesanal, uint qntEspumanteNacional, uint qntEspumanteImportado)
         {
             double valorTotal = (5 *  qntAgua) + (7 * qntSuco) + (8 * qntRefri) + (20 * qntCervejaComum) + (30 * qntCervejaArtesanal) + (80 * qntEspumanteNacional) + (140 * qntEspumanteImportado);
 
