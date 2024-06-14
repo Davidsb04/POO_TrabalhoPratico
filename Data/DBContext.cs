@@ -41,8 +41,8 @@ namespace POO_TrabalhoPratico.Data
 
                 if (ultimaFesta != null)
                 {
-                    string sql = "INSERT INTO cerimonias (tipoFesta, data, identificador, capacidade, convidados, precoTotal, nivelItens, qntAgua, qntSuco, qntRefri, qntCervejaComum, qntCervejaArtesanal, qntEspumanteNacional, qntEspumanteImportado, precoEspaco, precoFesta) " +
-                                 "VALUES (@TipoFesta, @Data, @Identificador, @Capacidade, @Convidados, @PrecoTotal, @NivelItens, @QntAgua, @QntSuco, @QntRefri, @QntCervejaComum, @QntCervejaArtesanal, @QntEspumanteNacional, @QntEspumanteImportado, @PrecoEspaco, @PrecoFesta)";
+                    string sql = "INSERT INTO cerimonias (tipoFesta, data, identificador, capacidade, convidados, precoTotal, nivelItens, qntAgua, qntSuco, qntRefri, qntCervejaComum, qntCervejaArtesanal, qntEspumanteNacional, qntEspumanteImportado, precoEspaco, precoProdutos, precoBebidas) " +
+                                 "VALUES (@TipoFesta, @Data, @Identificador, @Capacidade, @Convidados, @PrecoTotal, @NivelItens, @QntAgua, @QntSuco, @QntRefri, @QntCervejaComum, @QntCervejaArtesanal, @QntEspumanteNacional, @QntEspumanteImportado, @PrecoEspaco, @PrecoProdutos, @precoBebidas)";
 
                     using MySqlCommand comando = new MySqlCommand(sql, Conexao);
                     comando.Parameters.AddWithValue("@TipoFesta", ultimaFesta.GetTipoFesta().ToString());
@@ -52,7 +52,7 @@ namespace POO_TrabalhoPratico.Data
                     comando.Parameters.AddWithValue("@Convidados", numConvidados);
                     if ((int)ultimaFesta.GetTipoFesta() != 5)
                     {
-                        comando.Parameters.AddWithValue("@PrecoTotal", ultimaFesta.GetPreco() + ultimaFesta.GetEspaco().GetPreco());
+                        comando.Parameters.AddWithValue("@PrecoTotal", ultimaFesta.GetPrecoProdutos() + ultimaFesta.GetPrecoBebidas() + ultimaFesta.GetEspaco().GetPreco());
                         comando.Parameters.AddWithValue("@NivelItens", ultimaFesta.GetNivelFesta().ToString());
                         comando.Parameters.AddWithValue("@QntAgua", bebidasUltimaFesta.QntAgua);
                         comando.Parameters.AddWithValue("@QntSuco", bebidasUltimaFesta.QntSuco);
@@ -61,7 +61,8 @@ namespace POO_TrabalhoPratico.Data
                         comando.Parameters.AddWithValue("@QntCervejaArtesanal", bebidasUltimaFesta.QntCervejaArtesanal);
                         comando.Parameters.AddWithValue("@QntEspumanteNacional", bebidasUltimaFesta.QntEspumanteNacional);
                         comando.Parameters.AddWithValue("@QntEspumanteImportado", bebidasUltimaFesta.QntEspumanteImportado);
-                        comando.Parameters.AddWithValue("@PrecoFesta", ultimaFesta.GetPreco());
+                        comando.Parameters.AddWithValue("@PrecoProdutos", ultimaFesta.GetPrecoProdutos());
+                        comando.Parameters.AddWithValue("@PrecoBebidas", ultimaFesta.GetPrecoBebidas());
                     }
                     else
                     {
@@ -74,13 +75,14 @@ namespace POO_TrabalhoPratico.Data
                         comando.Parameters.AddWithValue("@QntCervejaArtesanal", 0);
                         comando.Parameters.AddWithValue("@QntEspumanteNacional", 0);
                         comando.Parameters.AddWithValue("@QntEspumanteImportado", 0);
-                        comando.Parameters.AddWithValue("@PrecoFesta", 0);
+                        comando.Parameters.AddWithValue("@PrecoProdutos", 0);
+                        comando.Parameters.AddWithValue("@PrecoBebidas", 0);
                     }
                     
                     comando.Parameters.AddWithValue("@PrecoEspaco", ultimaFesta.GetEspaco().GetPreco());
 
                     Conexao.Open();
-                    comando.ExecuteNonQuery(); // Use ExecuteNonQuery para comandos INSERT, UPDATE, DELETE
+                    comando.ExecuteNonQuery();
 
                     Console.WriteLine("\nA cerimonia foi agendada com sucesso!");
                 }
@@ -124,7 +126,8 @@ namespace POO_TrabalhoPratico.Data
                     DateTime data = reader.GetDateTime("data");
                     string identificador = reader.GetString("identificador");
                     int capacidade = reader.GetInt32("capacidade");
-                    double preco = reader.GetDouble("precototal");
+                    double precoProdutos = reader.GetDouble("precoprodutos");
+                    double precoBebidas = reader.GetDouble("precobebidas");
                     double precoEspaco = reader.GetDouble("precoespaco");
                     string tipoFestaString = reader.GetString("tipofesta");
                     string nivelFestaString = reader.GetString("nivelitens");
@@ -135,7 +138,9 @@ namespace POO_TrabalhoPratico.Data
 
                     NivelFesta nivelFesta = (NivelFesta)Enum.Parse(typeof(NivelFesta), nivelFestaString);
 
-                    Festa novaCerimonia = new Festa(preco, data, espaco, tipoFesta, nivelFesta);
+                    Bebidas bebidas = new Bebidas();
+
+                    Festa novaCerimonia = new Festa(precoProdutos, precoBebidas, data, espaco, tipoFesta, nivelFesta, bebidas);
 
                     festas.Add(novaCerimonia);
                 }

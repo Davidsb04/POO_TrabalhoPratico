@@ -13,15 +13,19 @@ namespace POO_TrabalhoPratico.Festas
     {
         ICasamento casamento;
 
-        public Casamento(double preco, DateTime data, Espaco espaco, TipoFesta tipoFesta, NivelFesta nivelFesta, int numConvidados) 
-            : base(preco, data, espaco, tipoFesta, nivelFesta)
+        public Casamento(double precoProduto, double precoBebidas, DateTime data, Espaco espaco, Bebidas bebidas, TipoFesta tipoFesta, NivelFesta nivelFesta, int numConvidados) 
+            : base(precoProduto, precoBebidas, data, espaco, tipoFesta, nivelFesta, bebidas)
         {
             casamento = new CalcularValorFesta();
 
             try
             {
+                //Calculo do valor total da festa
                 Festa? ultimaFesta = FestaCia.Festas.LastOrDefault();
-                ultimaFesta?.SetPreco(casamento.CalcularValorCasamento(numConvidados, nivelFesta, espaco));
+                ultimaFesta?.SetPrecoProdutos(casamento.CalcularValorCasamento(numConvidados, nivelFesta, espaco));
+
+                //Calculo do valor total das bebidas
+                ultimaFesta?.SetPrecoBebdias(bebidas.CalcularValorBebida(bebidas));
             }
             catch (Exception ex)
             {

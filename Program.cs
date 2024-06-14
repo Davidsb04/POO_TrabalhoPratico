@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Google.Protobuf.WellKnownTypes;
+using MySql.Data.MySqlClient;
 using POO_TrabalhoPratico.Data;
 using POO_TrabalhoPratico.Enums;
 using POO_TrabalhoPratico.Festas;
@@ -15,6 +16,11 @@ namespace POO_TrabalhoPratico
         {
             DBContext.ConfiguracaoConexao();            
             DBContext.LerDadosDoBanco(ListaFestas);
+
+            foreach(var festa in ListaFestas)
+            {
+                Console.WriteLine($"Data: {festa.GetData()} \nLocal: {festa.GetEspaco().GetIdentificador()}");
+            }
 
             MenuInicial();
 
@@ -79,7 +85,7 @@ namespace POO_TrabalhoPratico
                             }
                         }
 
-                        double valorBebidas = 0;
+                        Bebidas bebidas = null;
 
                         if (tipoFesta != TipoFesta.Livre)
                         {
@@ -88,7 +94,7 @@ namespace POO_TrabalhoPratico
                             {
                                 try
                                 {
-                                    valorBebidas = SelecionarBebidas(nivelFesta);
+                                    bebidas = SelecionarBebidas(nivelFesta);
                                     bebidasValidas = true;
                                 }
                                 catch (Exception)
@@ -100,25 +106,25 @@ namespace POO_TrabalhoPratico
 
                         Festa novaFesta;
 
-                        novaFesta = new Festa(valorBebidas, DateTime.Today, new Espaco("Z", 100, 10000), tipoFesta, nivelFesta);
+                        novaFesta = new Festa(0, 0, DateTime.Today, new Espaco("Z", 100, 10000), tipoFesta, nivelFesta, bebidas);
 
-                        Espaco melhorEspaco = festaCia.AgendarFesta(numConvidados, novaFesta, tipoFesta, valorBebidas, nivelFesta);
+                        Espaco melhorEspaco = festaCia.AgendarFesta(numConvidados, novaFesta, tipoFesta, nivelFesta, bebidas);
 
                         //Para casamentos
                         if (tipoFesta == TipoFesta.Casamento)
-                            novaFesta = new Casamento(valorBebidas, DateTime.Today, melhorEspaco, tipoFesta, nivelFesta, numConvidados);
+                            novaFesta = new Casamento(0, 0, DateTime.Today, melhorEspaco, bebidas, tipoFesta, nivelFesta, numConvidados);
                         //Para fomaturas
                         else if (tipoFesta == TipoFesta.Formatura)
-                            novaFesta = new Formatura(valorBebidas, DateTime.Today, melhorEspaco, tipoFesta, nivelFesta, numConvidados);
+                            novaFesta = new Formatura(0, 0, DateTime.Today, melhorEspaco, bebidas, tipoFesta, nivelFesta, numConvidados);
                         //Para festas de empresa
                         else if (tipoFesta == TipoFesta.FestaEmpresa)
-                            novaFesta = new FestaEmpresa(valorBebidas, DateTime.Today, melhorEspaco, tipoFesta, nivelFesta, numConvidados);
+                            novaFesta = new FestaEmpresa(0, 0, DateTime.Today, melhorEspaco, bebidas, tipoFesta, nivelFesta, numConvidados);
                         //Para festas de aniversário
                         else if (tipoFesta == TipoFesta.FestaAniversario)
-                            novaFesta = new FestaAniversario(valorBebidas, DateTime.Today, melhorEspaco, tipoFesta, nivelFesta, numConvidados);
+                            novaFesta = new FestaAniversario(0, 0, DateTime.Today, melhorEspaco, bebidas, tipoFesta, nivelFesta, numConvidados);
                         //Para festas livres
                         else
-                            novaFesta = new Festa(valorBebidas, DateTime.Today, melhorEspaco, tipoFesta, nivelFesta);
+                            novaFesta = new Festa(0, 0, DateTime.Today, melhorEspaco, tipoFesta, nivelFesta, bebidas);
 
 
                         if (melhorEspaco.GetIdentificador() != "Z")
@@ -149,7 +155,7 @@ namespace POO_TrabalhoPratico
             } while (opcao != 3);
         }
 
-        public static double SelecionarBebidas(NivelFesta nivelFesta)
+        public static Bebidas SelecionarBebidas(NivelFesta nivelFesta)
         {
             var bebidas = new Bebidas();
             bebidas.QntCervejaArtesanal = 0;
@@ -181,7 +187,7 @@ namespace POO_TrabalhoPratico
 
             Bebidas.AdicionarQuantidadeDeBebidas(bebidas);
 
-            return calcularValorFesta.CalcularValorBebida(bebidas.QntAgua, bebidas.QntSuco, bebidas.QntRefri, bebidas.QntCervejaComum, bebidas.QntCervejaArtesanal, bebidas.QntEspumanteNacional, bebidas.QntEspumanteImportado);
+            return bebidas;
         }
         
     }

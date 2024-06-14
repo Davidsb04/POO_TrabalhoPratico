@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using POO_TrabalhoPratico.Enums;
+using POO_TrabalhoPratico.Helpers;
 
 [assembly: InternalsVisibleTo("TrabalhoPratico.Tests")]
 
@@ -31,18 +32,19 @@ namespace POO_TrabalhoPratico
             };
         }
         //Agenda a cerimonia, salvando as informações da festa
-        internal Espaco AgendarFesta(int numConvidados, Festa novaFesta, TipoFesta tipoFesta, double valorBebidas, NivelFesta nivelFesta)
+        internal Espaco AgendarFesta(int numConvidados, Festa novaFesta, TipoFesta tipoFesta, NivelFesta nivelFesta, Bebidas bebidas)
         {           
             DateTime dataAtual = DateTime.Today;            
 
             DateTime dataCerimonia = CalcularProximaData(numConvidados, dataAtual);
             Espaco melhorEspaco = SelecionarMelhorEspaco(numConvidados, dataCerimonia);
 
-            novaFesta = new Festa(valorBebidas, dataCerimonia, melhorEspaco, tipoFesta, nivelFesta);
+            novaFesta = new Festa(0, 0, dataCerimonia, melhorEspaco, tipoFesta, nivelFesta, bebidas);
             Festas.Add(novaFesta);
 
             return melhorEspaco;
         }
+
         //Retorna uma data válida para a cerimonia
         internal DateTime CalcularProximaData(int numConvidados, DateTime dataAtual)
         {
@@ -77,6 +79,7 @@ namespace POO_TrabalhoPratico
         {
             return Festas.Any(c => c.GetData().Date == data.Date && c.GetEspaco().GetIdentificador() == espacoEspecifico.GetIdentificador());
         }
+
         //Seleciona o melhor espaço possível com base no número de convidados
         internal Espaco SelecionarMelhorEspaco(int numConvidados, DateTime data)
         {
@@ -87,45 +90,41 @@ namespace POO_TrabalhoPratico
                 if (numConvidados <= 50)
                 {
                     if (espaco.GetIdentificador() == "G")
-                    {
                         return espaco;
-                    }
+
                     continue;
                 }
-                else if (numConvidados <= 100)
+                if (numConvidados <= 100 && numConvidados > 50)
                 {
                     if(diferenca < 50)
                     {
-                        bool espacoOcupado = Festas.Any(c => c.GetEspaco() == espaco && c.GetData().Date == data.Date);
+                        bool espacoOcupado = FestaCia.Festas.Any(c => c.GetEspaco() == espaco && c.GetData().Date == data.Date);
 
                         if (espacoOcupado)
-                        {
                             continue;
-                        }
 
-                        return espaco;
+                        if (espaco.GetIdentificador() == "A" || espaco.GetIdentificador() == "B" || espaco.GetIdentificador() == "C" || espaco.GetIdentificador() == "D")
+                            return espaco;
                     }                    
                 }
-                else if(numConvidados <= 200)
+                if(numConvidados > 100 && numConvidados <= 200)
                 {
                     if (diferenca >= 0 && diferenca < 100)
                     {
-                        bool espacoOcupado = Festas.Any(c => c.GetEspaco() == espaco && c.GetData().Date == data.Date);
+                        bool espacoOcupado = FestaCia.Festas.Any(c => c.GetEspaco() == espaco && c.GetData().Date == data.Date);
 
                         if (espacoOcupado)
-                        {
                             continue;
-                        }
 
-                        return espaco;
+                        if(espaco.GetIdentificador() == "E" || espaco.GetIdentificador() == "F")
+                            return espaco;
                     }                    
                 }
-                else
+                if(numConvidados > 200 &&  numConvidados <= 500)
                 {
                     if (espaco.GetIdentificador() == "H")
-                    {
                         return espaco;
-                    }
+
                     continue;
                 }
                 
@@ -159,14 +158,36 @@ namespace POO_TrabalhoPratico
 
             if (ultimaFesta != null)
             {
-                return
+                if(ultimaFesta.GetNivelFesta() != NivelFesta.Livre)
+                {
+
+                    Bebidas bebidas = new Bebidas();
+
+                    return
                     $"\nTipo da festa: {ultimaFesta.GetTipoFesta()}\n" +
                     $"Data da Festa: {ultimaFesta.GetData().ToShortDateString()}\n" +
                     $"Espaço da Festa: {ultimaFesta.GetEspaco().GetIdentificador()}\n" +
-                    $"Nível da Festa: {ultimaFesta.GetNivelFesta()}\n" +
                     $"Valor Espaço: R${ultimaFesta.GetEspaco().GetPreco()}\n" +
-                    $"Valor Festa: R${ultimaFesta.GetPreco()}\n" +
-                    $"Valor Total: R${ultimaFesta.GetPreco() + ultimaFesta.GetEspaco().GetPreco()}";
+                    $"Valor Total da Festa: R${ultimaFesta.GetEspaco().GetPreco()}";
+                }
+               
+                return
+                    $"\nTipo da festa: {ultimaFesta.GetTipoFesta()}\n" +
+                    $"Data da Festa: {ultimaFesta.GetData().ToShortDateString()}\n" +
+                    $"Espaço da Festa: {ultimaFesta.GetEspaco().GetIdentificador()}\n\n" +
+                    "Bebidas:\n" +
+                    $"Quantidade de Água: {ultimaFesta.GetBebidas().QntAgua}\n" +
+                    $"Quantidade de Suco: {ultimaFesta.GetBebidas().QntSuco}\n" +
+                    $"Quantidade de Refrigerante: {ultimaFesta.GetBebidas().QntRefri}\n" +
+                    $"Quantidade de Cerveja Comum: {ultimaFesta.GetBebidas().QntCervejaComum}\n" +
+                    $"Quantidade de Cerveja Artesanal: {ultimaFesta.GetBebidas().QntCervejaArtesanal}\n" +
+                    $"Quantidade de Espumante Nacional: {ultimaFesta.GetBebidas().QntEspumanteNacional}\n" +
+                    $"Quantidade de Espumante Importado: {ultimaFesta.GetBebidas().QntEspumanteImportado}\n\n" +
+                    $"Nível dos Produtos: {ultimaFesta.GetNivelFesta()}\n" +
+                    $"Valor Espaço: R${ultimaFesta.GetEspaco().GetPreco()}\n" +
+                    $"Valor Total dos Produtos: R${ultimaFesta.GetPrecoProdutos()}\n" +
+                    $"Valor Total das Bebidas: R${ultimaFesta.GetPrecoBebidas()}\n" +
+                    $"Valor Total da Festa: R${ultimaFesta.GetPrecoProdutos() + ultimaFesta.GetPrecoBebidas() + ultimaFesta.GetEspaco().GetPreco()}";
 
             }
             else
