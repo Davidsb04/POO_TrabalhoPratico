@@ -17,13 +17,7 @@ namespace POO_TrabalhoPratico
             DBContext.ConfiguracaoConexao();            
             DBContext.LerDadosDoBanco(ListaFestas);
 
-            foreach(var festa in ListaFestas)
-            {
-                Console.WriteLine($"Data: {festa.GetData()} \nLocal: {festa.GetEspaco().GetIdentificador()}");
-            }
-
             MenuInicial();
-
         }
 
         public static void MenuInicial()
@@ -69,7 +63,7 @@ namespace POO_TrabalhoPratico
                             tipoFesta = (TipoFesta)int.Parse(Console.ReadLine());
                         }
 
-                        NivelFesta nivelFesta = NivelFesta.Standard;
+                        NivelFesta nivelFesta = NivelFesta.Livre;
 
                         if (tipoFesta != TipoFesta.Livre && tipoFesta != TipoFesta.FestaAniversario)
                         {
@@ -159,7 +153,7 @@ namespace POO_TrabalhoPratico
         {
             var bebidas = new Bebidas();
             bebidas.QntCervejaArtesanal = 0;
-            bebidas.QntEspumanteImportado = 0;
+            bebidas.QntEspumanteImportado = 0;            
 
             Console.Write("\nInforme a quantidade de água (1,5L): ");
             bebidas.QntAgua = uint.Parse(Console.ReadLine());

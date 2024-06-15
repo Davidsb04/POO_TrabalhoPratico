@@ -158,11 +158,8 @@ namespace POO_TrabalhoPratico
 
             if (ultimaFesta != null)
             {
-                if(ultimaFesta.GetNivelFesta() != NivelFesta.Livre)
+                if(ultimaFesta.GetNivelFesta() == NivelFesta.Livre)
                 {
-
-                    Bebidas bebidas = new Bebidas();
-
                     return
                     $"\nTipo da festa: {ultimaFesta.GetTipoFesta()}\n" +
                     $"Data da Festa: {ultimaFesta.GetData().ToShortDateString()}\n" +
